@@ -1,20 +1,19 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_map <char, int> m;
-        if(s.length()<=1) return s.length();
-        int i = 0, j = 0, maxi = 0;
-        
-        while (j < s.length()) {
-            if (m[s[j]] == 0) {
-                m[s[j]]++;
-                maxi = std::max(maxi, j - i + 1);
-                j++;
-            } else {
-                m[s[i]]--;
-                i++;
+         vector < int > mp(256, -1);
+        int l=0, r=0, m=0;
+        while(r<s.length())
+        {
+            if(mp[s[r]]!=-1)
+            {
+                if(mp[s[r]]>=l) l= mp[s[r]]+1;
             }
+            m=max(m, r-l+1);
+        mp[s[r]]=r;
+        r++;
         }
-        return maxi;
+        return m;
     }
+    
 };
