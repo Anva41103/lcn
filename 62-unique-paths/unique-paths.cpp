@@ -1,17 +1,16 @@
 class Solution {
 public:
-    int uniquePath( vector <vector <int>>& dp, int x, int y)
-{
-if(x==0&&y==0) return 1;
-if(x<0||y<0) return 0;
-if(dp[x][y]!=-1) return dp[x][y];
-int left=uniquePath(dp,x, y-1);
-int right=uniquePath(dp,x-1, y);
-return dp[x][y]=left+right;
-}
-
-    int uniquePaths(int n, int m) {
-        vector <vector <int>> dp(n, vector <int>(m,-1));
-        return uniquePath(dp, n-1,m-1);
+    int helper(vector<vector<int>> &dp, int i,int j)
+    {
+        if(i<0||j<0) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(i==0||j==0) return 1;
+        int left=helper(dp,i-1,j);
+        int up=helper(dp,i,j-1);
+        return dp[i][j]=left+up;
+    }
+    int uniquePaths(int m, int n) {
+        vector <vector <int>> dp(m, vector <int>(n,-1));
+        return helper(dp,m-1,n-1);
     }
 };
