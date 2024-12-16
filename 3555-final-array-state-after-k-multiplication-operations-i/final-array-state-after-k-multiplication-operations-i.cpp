@@ -1,16 +1,25 @@
 class Solution {
 public:
     vector<int> getFinalState(vector<int>& nums, int k, int m) {
-        int l=0;
+        vector <int> ans(nums.size());
+        priority_queue <pair <int,int>, vector <pair<int,int>>, greater <pair <int,int>>> pq;
+        for(int i=0;i<nums.size();i++)
+        {
+            pq.push({nums[i],i});
+        }
         while(k--)
         {
-            l=0;
-            for(int i=0;i<nums.size();i++)
-            {
-                if(nums[i]<nums[l])l=i;
-            }
-            nums[l]*=m;
+            auto it=pq.top();
+            pq.pop();
+            it.first*=m;
+            pq.push(it);
         }
-        return nums;
+        while(!pq.empty())
+        {
+            auto it=pq.top();
+            pq.pop();
+            ans[it.second]=it.first;
+        }
+        return ans;
     }
 };
